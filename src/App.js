@@ -8,6 +8,8 @@ const API_KEY = "4da13827f89d780929fef24ba2413bba";
 class App extends React.Component{
   state = {
     temperature: undefined,
+    temperature_max: undefined,
+    temperature_min: undefined,
     city: undefined,
     country: undefined,
     humidity: undefined,
@@ -21,8 +23,11 @@ class App extends React.Component{
     const api_call =  await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`);
   const data = await api_call.json();
   if (city && country){
+    console.log(data);
     this.setState({
       temperature: data.main.temp,
+      temperature_max: data.main.temp_max,
+      temperature_min: data.main.temp_min,
       city: data.name,
       country: data.sys.country,
       humidity: data.main.humidity,
@@ -33,6 +38,8 @@ class App extends React.Component{
   } else {
       this.setState({
           temperature: undefined,
+          temperature_max: undefined,
+          temperature_min: undefined,
           city: undefined,
           country: undefined,
           humidity: undefined,
@@ -49,6 +56,8 @@ class App extends React.Component{
         <Form getWeather={this.getWeather} />
         <Weather 
         temperature={this.state.temperature}
+        temperature_max={this.state.temperature_max}
+        temperature_min={this.state.temperature_min}
         city={this.state.city}
         country={this.state.country}
         humidity={this.state.humidity}
